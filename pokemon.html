@@ -1,0 +1,110 @@
+<html> 
+<style> 
+Body {
+  font-family: Calibri, Helvetica, sans-serif;
+  background-color: #ffbf00;
+}
+button { 
+       background-color: #ff9933; 
+       width: 100%;
+        color: Black; 
+        padding: 15px; 
+        margin: 10px 0px; 
+        border: none; 
+        cursor: pointer; 
+         } 
+ form { 
+        border: 3px solid #f1f1f1; 
+    } 
+ input[type=text], input[type=password] { 
+        width: 100%; 
+        margin: 8px 0;
+        padding: 12px 20px; 
+        display: inline-block; 
+        border: 2px solid green; 
+        box-sizing: border-box; 
+    }
+ button:hover { 
+        opacity: 0.7; 
+    } 
+  .cancelbtn { 
+        width: auto; 
+        padding: 10px 18px;
+        margin: 10px 5px;
+    } 
+      
+   
+ .container { 
+        padding: 25px; 
+        background-color: #ffecb3;
+    } 
+</style> 
+<body>
+
+<script src="pikachu.js"></script>
+  <div class="container">
+
+    <label for="name"><b>Welcome To Pokemon Scearch Website </b></label><hr>
+	<a href="/bbb">Update user name</a><hr>
+	<a href="/eee">Update user password</a><hr>
+	<a href="/fff">Delete</a><hr>
+    <label for="name"><b>Search your pokemon</b></label>
+	 <input id="input01" type="text" placeholder="Pokemon ID"/> <button onclick="btn01()">Confirm</button> 
+	<p id="message01"></p>
+	
+
+	<div class="pokemon"></div>
+<script>
+		function btn01(){
+		var id
+		var colors01 = input01.value;
+		if (colors01 >= 0 ){
+
+
+const apiData = {
+    url: 'https://pokeapi.co/api/v2/',
+    type: 'pokemon',
+    id: colors01,
+}
+
+const {url, type, id} = apiData
+
+const apiUrl = `${url}${type}/${id}`
+
+fetch(apiUrl)
+    .then( (data) => {
+        if(data.ok){
+            return data.json()
+        }
+        throw new Error('Response not ok.'); 
+    })
+    .then( pokemon => generateHtml(pokemon))
+    .catch( error => console.error('Error:', error))
+
+
+const generateHtml = (data) => {
+    console.log(data)
+    const html = `
+    
+        <img src=${data.sprites.front_default}>
+        <div class="details">
+		
+		    <div class="name">${data.name}</div>
+            <span>Height: ${data.height}</span>
+            <span>Weight: ${data.weight}</span>
+			<div class="id">Pokemon ID: ${data.id}</div>
+        </div>
+    `
+    const pokemonDiv = document.querySelector('.pokemon')
+    pokemonDiv.innerHTML = html
+    }
+		}
+	
+		}
+
+</script>
+
+ </div>
+ 
+ </body>
+</html>

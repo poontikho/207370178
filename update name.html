@@ -1,0 +1,132 @@
+<!DOCTYPE html> 
+<html> 
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<title> Update User Page </title>
+<style> 
+Body {
+  font-family: Calibri, Helvetica, sans-serif;
+  background-color: #ffbf00;
+}
+button { 
+       background-color: #ff9933; 
+       width: 100%;
+        color: Black; 
+        padding: 15px; 
+        margin: 10px 0px; 
+        border: none; 
+        cursor: pointer; 
+         } 
+ form { 
+        border: 3px solid #f1f1f1; 
+    } 
+ input[type=text], input[type=password] { 
+        width: 100%; 
+        margin: 8px 0;
+        padding: 12px 20px; 
+        display: inline-block; 
+        border: 2px solid green; 
+        box-sizing: border-box; 
+    }
+ button:hover { 
+        opacity: 0.7; 
+    } 
+  .cancelbtn { 
+        width: auto; 
+        padding: 10px 18px;
+        margin: 10px 5px;
+    } 
+      
+   
+ .container { 
+        padding: 25px; 
+        background-color: #ffecb3;
+    } 
+</style> 
+</head>  
+<script>
+  $(document).ready(function(){
+
+	
+	$("#login").click(function() {
+	
+		if ($("#username").val()=="" || $("#newname").val()=="") {
+			alert('LoginID & NewID cannot Null!');
+			return false;
+		}
+	
+	
+		var username =$("#username").val();
+		var newn =$("#newname").val();
+		var mydata ="Old User Name="+username+"&New User Name="+newn;
+		alert(mydata);
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://127.0.0.1:9998/check_upd',
+			dataType:"text",
+			data:mydata,
+            success: function(data) {
+			//alert(data);
+				if(data=="login_ok"){
+					alert(data);
+					localStorage.setItem("loginid", username);
+					localStorage.setItem("loginstatus", "OK");
+					location.href="http://www.hyalinehk.com:9999/book";
+					
+				}else{
+					alert(data);
+				}
+				
+            },
+            error: function(xhr, status, error) {
+                console.log('Error: ' + error.message);
+            }
+        });
+    });
+	
+	});
+	
+	
+</script>
+
+<body>  
+
+
+  <div class="container">
+    <h1>Update User</h1>
+	<div class="pokemon"></div>
+	<script src="blastoise.js"></script>
+    <p>Please fill in this form to update your user name.</p>
+    <hr>
+
+    <label for="name"><b>Old User Name</b></label>
+    <input id="username" type="text" placeholder="Old User Name" name="olduser" required>
+
+    <label for="name"><b>New User Name</b></label>
+    <input id="newname" type="text" placeholder="New User Name" name="newuser" required>
+
+
+	
+	<a href="/login">Login</a>
+  </div>
+<div class="container">
+    <div class="clearfix">
+      <!--<button type="button" class="cancelbtn">Cancel</button>-->
+      <button type="submit" id="login" class="registerbtn">Update User Name</button>
+	<a href="/eee">Update user password</a><hr>
+	<a href="/fff">Delete</a><hr>
+	<a href="/ggg">Search pokemon</a><hr>
+
+		
+	</div>
+</div>
+
+
+<div id = "apiresult"> </div>
+
+</body>   
+</html>
+
+ 
